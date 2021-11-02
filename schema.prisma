@@ -38,3 +38,40 @@ model Tag {
   name  String @default("")
   posts Post[] @relation("Post_tags_Tag_posts")
 }
+
+model Page {
+  id   String @id @default(cuid())
+  name String @default("")
+}
+
+model PageSection {
+  id   String @id @default(cuid())
+  name String @default("")
+}
+
+model Image {
+  id              String  @id @default(cuid())
+  title           String  @default("")
+  alt             String  @default("")
+  image_filesize  Int?
+  image_extension String?
+  image_width     Int?
+  image_height    Int?
+  image_mode      String?
+  image_id        String?
+}
+
+model NavigationMenu {
+  id   String @id @default(cuid())
+  name String @default("")
+}
+
+model Partner {
+  id   String @id @default(cuid())
+  name String @default("")
+}
+
+model Achievement {
+  id   String @id @default(cuid())
+  name String @default("")
+}

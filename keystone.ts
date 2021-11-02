@@ -29,5 +29,12 @@ export default withAuth(
     },
     lists,
     session,
+    images: {
+      upload: 'local',
+      local: {
+        storagePath: 'public/uploads/images',
+        baseUrl: '/images',
+      },
+    },
   })
 );
