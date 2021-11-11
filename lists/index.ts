@@ -7,6 +7,7 @@ import Image from './Image.list'
 import NavigationMenu from './NavigationMenu.list'
 import Partner from './Partner.list'
 import Achievement from './Achievement.list'
+import NewsletterSubmission from './NewsletterSubmission.list'
 
 export default {
     User,
@@ -17,5 +18,6 @@ export default {
     Image,
     NavigationMenu,
     Partner,
-    Achievement
+    Achievement,
+    NewsletterSubmission
 }

@@ -106,13 +106,6 @@ type User {
   name: String
   email: String
   password: PasswordState
-  posts(
-    where: PostWhereInput! = {}
-    orderBy: [PostOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [Post!]
-  postsCount(where: PostWhereInput! = {}): Int
 }
 
 type PasswordState {
@@ -131,7 +124,6 @@ input UserWhereInput {
   id: IDFilter
   name: StringFilter
   email: StringFilter
-  posts: PostManyRelationFilter
 }
 
 input IDFilter {
@@ -173,12 +165,6 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
-input PostManyRelationFilter {
-  every: PostWhereInput
-  some: PostWhereInput
-  none: PostWhereInput
-}
-
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -194,14 +180,6 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  posts: PostRelateToManyForUpdateInput
-}
-
-input PostRelateToManyForUpdateInput {
-  disconnect: [PostWhereUniqueInput!]
-  set: [PostWhereUniqueInput!]
-  create: [PostCreateInput!]
-  connect: [PostWhereUniqueInput!]
 }
 
 input UserUpdateArgs {
@@ -213,12 +191,6 @@ input UserCreateInput {
   name: String
   email: String
   password: String
-  posts: PostRelateToManyForCreateInput
-}
-
-input PostRelateToManyForCreateInput {
-  create: [PostCreateInput!]
-  connect: [PostWhereUniqueInput!]
 }
 
 type Post {
@@ -227,7 +199,6 @@ type Post {
   status: String
   content: Post_content_Document
   publishDate: DateTime
-  author: User
   tags(
     where: TagWhereInput! = {}
     orderBy: [TagOrderByInput!]! = []
@@ -256,7 +227,6 @@ input PostWhereInput {
   title: StringFilter
   status: StringNullableFilter
   publishDate: DateTimeNullableFilter
-  author: UserWhereInput
   tags: TagManyRelationFilter
 }
 
@@ -317,14 +287,7 @@ input PostUpdateInput {
   status: String
   content: JSON
   publishDate: DateTime
-  author: UserRelateToOneForUpdateInput
   tags: TagRelateToManyForUpdateInput
-}
-
-input UserRelateToOneForUpdateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
 }
 
 input TagRelateToManyForUpdateInput {
@@ -344,13 +307,7 @@ input PostCreateInput {
   status: String
   content: JSON
   publishDate: DateTime
-  author: UserRelateToOneForCreateInput
   tags: TagRelateToManyForCreateInput
-}
-
-input UserRelateToOneForCreateInput {
-  create: UserCreateInput
-  connect: UserWhereUniqueInput
 }
 
 input TagRelateToManyForCreateInput {
@@ -383,6 +340,12 @@ input TagWhereInput {
   posts: PostManyRelationFilter
 }
 
+input PostManyRelationFilter {
+  every: PostWhereInput
+  some: PostWhereInput
+  none: PostWhereInput
+}
+
 input TagOrderByInput {
   id: OrderDirection
   name: OrderDirection
@@ -391,6 +354,13 @@ input TagOrderByInput {
 input TagUpdateInput {
   name: String
   posts: PostRelateToManyForUpdateInput
+}
+
+input PostRelateToManyForUpdateInput {
+  disconnect: [PostWhereUniqueInput!]
+  set: [PostWhereUniqueInput!]
+  create: [PostCreateInput!]
+  connect: [PostWhereUniqueInput!]
 }
 
 input TagUpdateArgs {
@@ -403,9 +373,23 @@ input TagCreateInput {
   posts: PostRelateToManyForCreateInput
 }
 
+input PostRelateToManyForCreateInput {
+  create: [PostCreateInput!]
+  connect: [PostWhereUniqueInput!]
+}
+
 type Page {
   id: ID!
-  name: String
+  pageURL: String
+  title: String
+  sections(
+    where: PageSectionWhereInput! = {}
+    orderBy: [PageSectionOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [PageSection!]
+  sectionsCount(where: PageSectionWhereInput! = {}): Int
+  additionalData: JSON
 }
 
 input PageWhereUniqueInput {
@@ -417,16 +401,35 @@ input PageWhereInput {
   OR: [PageWhereInput!]
   NOT: [PageWhereInput!]
   id: IDFilter
-  name: StringFilter
+  pageURL: StringFilter
+  title: StringFilter
+  sections: PageSectionManyRelationFilter
+}
+
+input PageSectionManyRelationFilter {
+  every: PageSectionWhereInput
+  some: PageSectionWhereInput
+  none: PageSectionWhereInput
 }
 
 input PageOrderByInput {
   id: OrderDirection
-  name: OrderDirection
+  pageURL: OrderDirection
+  title: OrderDirection
 }
 
 input PageUpdateInput {
-  name: String
+  pageURL: String
+  title: String
+  sections: PageSectionRelateToManyForUpdateInput
+  additionalData: JSON
+}
+
+input PageSectionRelateToManyForUpdateInput {
+  disconnect: [PageSectionWhereUniqueInput!]
+  set: [PageSectionWhereUniqueInput!]
+  create: [PageSectionCreateInput!]
+  connect: [PageSectionWhereUniqueInput!]
 }
 
 input PageUpdateArgs {
@@ -435,49 +438,33 @@ input PageUpdateArgs {
 }
 
 input PageCreateInput {
-  name: String
+  pageURL: String
+  title: String
+  sections: PageSectionRelateToManyForCreateInput
+  additionalData: JSON
+}
+
+input PageSectionRelateToManyForCreateInput {
+  create: [PageSectionCreateInput!]
+  connect: [PageSectionWhereUniqueInput!]
 }
 
 type PageSection {
   id: ID!
-  name: String
-}
-
-input PageSectionWhereUniqueInput {
-  id: ID
-}
-
-input PageSectionWhereInput {
-  AND: [PageSectionWhereInput!]
-  OR: [PageSectionWhereInput!]
-  NOT: [PageSectionWhereInput!]
-  id: IDFilter
-  name: StringFilter
-}
-
-input PageSectionOrderByInput {
-  id: OrderDirection
-  name: OrderDirection
-}
-
-input PageSectionUpdateInput {
-  name: String
-}
-
-input PageSectionUpdateArgs {
-  where: PageSectionWhereUniqueInput!
-  data: PageSectionUpdateInput!
-}
-
-input PageSectionCreateInput {
-  name: String
-}
-
-type Image {
-  id: ID!
-  title: String
-  alt: String
-  image: ImageFieldOutput
+  sectionId: String
+  sectionTitle: String
+  backgroundImage: ImageFieldOutput
+  contentTitle: String
+  contentImages(
+    where: ImageWhereInput! = {}
+    orderBy: [ImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Image!]
+  contentImagesCount(where: ImageWhereInput! = {}): Int
+  content: PageSection_content_Document
+  isActive: Boolean
+  page: Page
 }
 
 interface ImageFieldOutput {
@@ -495,6 +482,113 @@ enum ImageExtension {
   png
   webp
   gif
+}
+
+type PageSection_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input PageSectionWhereUniqueInput {
+  id: ID
+}
+
+input PageSectionWhereInput {
+  AND: [PageSectionWhereInput!]
+  OR: [PageSectionWhereInput!]
+  NOT: [PageSectionWhereInput!]
+  id: IDFilter
+  sectionId: StringFilter
+  sectionTitle: StringFilter
+  contentTitle: StringFilter
+  contentImages: ImageManyRelationFilter
+  isActive: BooleanFilter
+  page: PageWhereInput
+}
+
+input ImageManyRelationFilter {
+  every: ImageWhereInput
+  some: ImageWhereInput
+  none: ImageWhereInput
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input PageSectionOrderByInput {
+  id: OrderDirection
+  sectionId: OrderDirection
+  sectionTitle: OrderDirection
+  contentTitle: OrderDirection
+  isActive: OrderDirection
+}
+
+input PageSectionUpdateInput {
+  sectionId: String
+  sectionTitle: String
+  backgroundImage: ImageFieldInput
+  contentTitle: String
+  contentImages: ImageRelateToManyForUpdateInput
+  content: JSON
+  isActive: Boolean
+  page: PageRelateToOneForUpdateInput
+}
+
+input ImageFieldInput {
+  upload: Upload
+  ref: String
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
+input ImageRelateToManyForUpdateInput {
+  disconnect: [ImageWhereUniqueInput!]
+  set: [ImageWhereUniqueInput!]
+  create: [ImageCreateInput!]
+  connect: [ImageWhereUniqueInput!]
+}
+
+input PageRelateToOneForUpdateInput {
+  create: PageCreateInput
+  connect: PageWhereUniqueInput
+  disconnect: Boolean
+}
+
+input PageSectionUpdateArgs {
+  where: PageSectionWhereUniqueInput!
+  data: PageSectionUpdateInput!
+}
+
+input PageSectionCreateInput {
+  sectionId: String
+  sectionTitle: String
+  backgroundImage: ImageFieldInput
+  contentTitle: String
+  contentImages: ImageRelateToManyForCreateInput
+  content: JSON
+  isActive: Boolean
+  page: PageRelateToOneForCreateInput
+}
+
+input ImageRelateToManyForCreateInput {
+  create: [ImageCreateInput!]
+  connect: [ImageWhereUniqueInput!]
+}
+
+input PageRelateToOneForCreateInput {
+  create: PageCreateInput
+  connect: PageWhereUniqueInput
+}
+
+type Image {
+  id: ID!
+  title: String
+  alt: String
+  image: ImageFieldOutput
 }
 
 input ImageWhereUniqueInput {
@@ -531,16 +625,6 @@ input ImageUpdateInput {
   alt: String
   image: ImageFieldInput
 }
-
-input ImageFieldInput {
-  upload: Upload
-  ref: String
-}
-
-"""
-The `Upload` scalar type represents a file upload.
-"""
-scalar Upload
 
 input ImageUpdateArgs {
   where: ImageWhereUniqueInput!

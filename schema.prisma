@@ -17,7 +17,6 @@ model User {
   name     String @default("")
   email    String @unique @default("")
   password String
-  posts    Post[] @relation("Post_author")
 }
 
 model Post {
@@ -26,11 +25,7 @@ model Post {
   status      String?   @default("draft")
   content     String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   publishDate DateTime?
-  author      User?     @relation("Post_author", fields: [authorId], references: [id])
-  authorId    String?   @map("author")
   tags        Tag[]     @relation("Post_tags_Tag_posts")
-
-  @@index([authorId])
 }
 
 model Tag {
@@ -40,25 +35,47 @@ model Tag {
 }
 
 model Page {
-  id   String @id @default(cuid())
-  name String @default("")
+  id             String        @id @default(cuid())
+  pageURL        String        @default("")
+  title          String        @default("")
+  sections       PageSection[] @relation("PageSection_page")
+  additionalData String?
+
+  @@index([pageURL])
 }
 
 model PageSection {
-  id   String @id @default(cuid())
-  name String @default("")
+  id                        String  @id @default(cuid())
+  sectionId                 String  @default("")
+  sectionTitle              String  @default("")
+  backgroundImage_filesize  Int?
+  backgroundImage_extension String?
+  backgroundImage_width     Int?
+  backgroundImage_height    Int?
+  backgroundImage_mode      String?
+  backgroundImage_id        String?
+  contentTitle              String  @default("")
+  contentImages             Image[] @relation("PageSection_contentImages_many")
+  content                   String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  isActive                  Boolean @default(true)
+  page                      Page?   @relation("PageSection_page", fields: [pageId], references: [id])
+  pageId                    String? @map("page")
+
+  @@index([sectionId])
+  @@index([pageId])
 }
 
 model Image {
-  id              String  @id @default(cuid())
-  title           String  @default("")
-  alt             String  @default("")
-  image_filesize  Int?
-  image_extension String?
-  image_width     Int?
-  image_height    Int?
-  image_mode      String?
-  image_id        String?
+  id                             String        @id @default(cuid())
+  title                          String        @default("")
+  alt                            String        @default("")
+  image_filesize                 Int?
+  image_extension                String?
+  image_width                    Int?
+  image_height                   Int?
+  image_mode                     String?
+  image_id                       String?
+  from_PageSection_contentImages PageSection[] @relation("PageSection_contentImages_many")
 }
 
 model NavigationMenu {

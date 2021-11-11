@@ -37,16 +37,6 @@ export default list({
         dividers: true,
       }),
       publishDate: timestamp(),
-      author: relationship({
-        ref: 'User.posts',
-        ui: {
-          displayMode: 'cards',
-          cardFields: ['name', 'email'],
-          inlineEdit: { fields: ['name', 'email'] },
-          linkToItem: true,
-          inlineCreate: { fields: ['name', 'email'] },
-        },
-      }),
       tags: relationship({
         ref: 'Tag.posts',
         ui: {

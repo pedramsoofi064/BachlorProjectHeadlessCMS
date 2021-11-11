@@ -10,5 +10,6 @@ export const lists = {
   Image: AppLists.Image,
   NavigationMenu: AppLists.NavigationMenu,
   Partner: AppLists.Partner,
-  Achievement: AppLists.Achievement
+  Achievement: AppLists.Achievement , 
+  NewsletterSubmission: AppLists.NewsletterSubmission
 };
