@@ -6,7 +6,9 @@
     "dev": "keystone-next dev",
     "start": "keystone-next start",
     "build": "keystone-next build",
-    "postinstall": "keystone-next postinstall"
+    "postinstall": "keystone-next postinstall",
+    "deploy": "keystone-next build && keystone-next prisma migrate deploy"
+
   },
   "dependencies": {
     "@keystone-next/auth": "^34.0.0",
