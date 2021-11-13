@@ -49,7 +49,7 @@ export default withAuth(
       isAccessAllowed: (context) => !!context.session?.data,
     },
     server: {
-      port: 3000,
+      port: 80,
       maxFileSize: 200 * 1024 * 1024,
       healthCheck: true,
     },
