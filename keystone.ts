@@ -15,7 +15,7 @@ const { withAuth } = createAuth({
   },
 });
 
-let sessionSecret = 'process.enfdfsdfsssssssssssssssssssssssssssssssssssv.SESSION_SECRET';
+let sessionSecret = process.env.SESSION_SECRET;
 
 if (!sessionSecret) {
   if (process.env.NODE_ENV === "production") {
