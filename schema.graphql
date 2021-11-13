@@ -2,7 +2,6 @@
 # Modify your Keystone config when you want to change this.
 
 input CreateInitialUserInput {
-  name: String
   email: String
   password: String
 }
@@ -83,6 +82,25 @@ type Mutation {
   updateAchievements(data: [AchievementUpdateArgs!]!): [Achievement]
   deleteAchievement(where: AchievementWhereUniqueInput!): Achievement
   deleteAchievements(where: [AchievementWhereUniqueInput!]!): [Achievement]
+  createNewsletterSubmission(
+    data: NewsletterSubmissionCreateInput!
+  ): NewsletterSubmission
+  createNewsletterSubmissions(
+    data: [NewsletterSubmissionCreateInput!]!
+  ): [NewsletterSubmission]
+  updateNewsletterSubmission(
+    where: NewsletterSubmissionWhereUniqueInput!
+    data: NewsletterSubmissionUpdateInput!
+  ): NewsletterSubmission
+  updateNewsletterSubmissions(
+    data: [NewsletterSubmissionUpdateArgs!]!
+  ): [NewsletterSubmission]
+  deleteNewsletterSubmission(
+    where: NewsletterSubmissionWhereUniqueInput!
+  ): NewsletterSubmission
+  deleteNewsletterSubmissions(
+    where: [NewsletterSubmissionWhereUniqueInput!]!
+  ): [NewsletterSubmission]
   endSession: Boolean!
 }
 
@@ -639,7 +657,17 @@ input ImageCreateInput {
 
 type NavigationMenu {
   id: ID!
-  name: String
+  title: String
+  pageURL: String
+  parent: NavigationMenu
+  children(
+    where: NavigationMenuWhereInput! = {}
+    orderBy: [NavigationMenuOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [NavigationMenu!]
+  childrenCount(where: NavigationMenuWhereInput! = {}): Int
+  status: String
 }
 
 input NavigationMenuWhereUniqueInput {
@@ -651,16 +679,45 @@ input NavigationMenuWhereInput {
   OR: [NavigationMenuWhereInput!]
   NOT: [NavigationMenuWhereInput!]
   id: IDFilter
-  name: StringFilter
+  title: StringFilter
+  pageURL: StringFilter
+  parent: NavigationMenuWhereInput
+  children: NavigationMenuManyRelationFilter
+  status: StringNullableFilter
+}
+
+input NavigationMenuManyRelationFilter {
+  every: NavigationMenuWhereInput
+  some: NavigationMenuWhereInput
+  none: NavigationMenuWhereInput
 }
 
 input NavigationMenuOrderByInput {
   id: OrderDirection
-  name: OrderDirection
+  title: OrderDirection
+  pageURL: OrderDirection
+  status: OrderDirection
 }
 
 input NavigationMenuUpdateInput {
-  name: String
+  title: String
+  pageURL: String
+  parent: NavigationMenuRelateToOneForUpdateInput
+  children: NavigationMenuRelateToManyForUpdateInput
+  status: String
+}
+
+input NavigationMenuRelateToOneForUpdateInput {
+  create: NavigationMenuCreateInput
+  connect: NavigationMenuWhereUniqueInput
+  disconnect: Boolean
+}
+
+input NavigationMenuRelateToManyForUpdateInput {
+  disconnect: [NavigationMenuWhereUniqueInput!]
+  set: [NavigationMenuWhereUniqueInput!]
+  create: [NavigationMenuCreateInput!]
+  connect: [NavigationMenuWhereUniqueInput!]
 }
 
 input NavigationMenuUpdateArgs {
@@ -669,7 +726,21 @@ input NavigationMenuUpdateArgs {
 }
 
 input NavigationMenuCreateInput {
-  name: String
+  title: String
+  pageURL: String
+  parent: NavigationMenuRelateToOneForCreateInput
+  children: NavigationMenuRelateToManyForCreateInput
+  status: String
+}
+
+input NavigationMenuRelateToOneForCreateInput {
+  create: NavigationMenuCreateInput
+  connect: NavigationMenuWhereUniqueInput
+}
+
+input NavigationMenuRelateToManyForCreateInput {
+  create: [NavigationMenuCreateInput!]
+  connect: [NavigationMenuWhereUniqueInput!]
 }
 
 type Partner {
@@ -739,6 +810,41 @@ input AchievementUpdateArgs {
 }
 
 input AchievementCreateInput {
+  name: String
+}
+
+type NewsletterSubmission {
+  id: ID!
+  name: String
+}
+
+input NewsletterSubmissionWhereUniqueInput {
+  id: ID
+}
+
+input NewsletterSubmissionWhereInput {
+  AND: [NewsletterSubmissionWhereInput!]
+  OR: [NewsletterSubmissionWhereInput!]
+  NOT: [NewsletterSubmissionWhereInput!]
+  id: IDFilter
+  name: StringFilter
+}
+
+input NewsletterSubmissionOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input NewsletterSubmissionUpdateInput {
+  name: String
+}
+
+input NewsletterSubmissionUpdateArgs {
+  where: NewsletterSubmissionWhereUniqueInput!
+  data: NewsletterSubmissionUpdateInput!
+}
+
+input NewsletterSubmissionCreateInput {
   name: String
 }
 
@@ -824,6 +930,16 @@ type Query {
   ): [Achievement!]
   achievement(where: AchievementWhereUniqueInput!): Achievement
   achievementsCount(where: AchievementWhereInput! = {}): Int
+  newsletterSubmissions(
+    where: NewsletterSubmissionWhereInput! = {}
+    orderBy: [NewsletterSubmissionOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [NewsletterSubmission!]
+  newsletterSubmission(
+    where: NewsletterSubmissionWhereUniqueInput!
+  ): NewsletterSubmission
+  newsletterSubmissionsCount(where: NewsletterSubmissionWhereInput! = {}): Int
   keystone: KeystoneMeta!
 }
 

@@ -79,8 +79,15 @@ model Image {
 }
 
 model NavigationMenu {
-  id   String @id @default(cuid())
-  name String @default("")
+  id       String           @id @default(cuid())
+  title    String           @default("")
+  pageURL  String           @default("")
+  parent   NavigationMenu?  @relation("NavigationMenu_parent", fields: [parentId], references: [id])
+  parentId String?          @map("parent")
+  children NavigationMenu[] @relation("NavigationMenu_parent")
+  status   String?          @default("enabled")
+
+  @@index([parentId])
 }
 
 model Partner {
@@ -89,6 +96,11 @@ model Partner {
 }
 
 model Achievement {
+  id   String @id @default(cuid())
+  name String @default("")
+}
+
+model NewsletterSubmission {
   id   String @id @default(cuid())
   name String @default("")
 }

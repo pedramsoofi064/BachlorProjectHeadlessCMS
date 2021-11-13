@@ -1,18 +1,40 @@
-/*
-Welcome to Keystone! This file is what keystone uses to start the app.
-
-It looks at the default export, and expects a Keystone config object.
-
-You can find all the config options in our docs here: https://keystonejs.com/docs/apis/config
-*/
 
 import { config } from '@keystone-next/keystone';
+import { statelessSessions } from '@keystone-next/keystone/session';
+import { createAuth } from '@keystone-next/auth';
 
-// Look in the schema file for how we define our lists, and how users interact with them through graphql or the Admin UI
 import { lists } from './schema';
 
-// Keystone auth is configured separately - check out the basic auth setup we are importing from our auth file.
-import { withAuth, session } from './auth';
+
+
+const { withAuth } = createAuth({
+  listKey: 'User',
+  identityField: 'email',
+  secretField: 'password',
+  sessionData: 'email',
+  initFirstItem: {
+    fields: ['email', 'password'],
+    itemData: { isAdmin: true },
+  },
+});
+
+
+let sessionSecret = process.env.SESSION_SECRET;
+if (!sessionSecret) {
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error('The SESSION_SECRET environment variable must be set in production');
+  } else {
+    sessionSecret = '--x DEV COOKIE SECRET; CHANGE ME x--';
+  }
+}
+
+let sessionMaxAge = 60 * 60 * 24 * 30; // 30 days
+
+const session = statelessSessions({
+  maxAge: sessionMaxAge,
+  secret: sessionSecret,
+  secure: false, // default: process.env.NODE_ENV === 'production'
+});
 
 export default withAuth(
   // Using the config function helps typescript guide you to the available options.
