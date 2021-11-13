@@ -17,21 +17,21 @@ const { withAuth } = createAuth({
 
 let sessionSecret = process.env.SESSION_SECRET;
 
-if (!sessionSecret) {
-  if (process.env.NODE_ENV === "production") {
-    throw new Error(
-      "The SESSION_SECRET environment variable must be set in production"
-    );
-  } else {
-    sessionSecret = "--x DEV COOKIE SECRET; CHANGE ME x--";
-  }
-}
+// if (!sessionSecret) {
+//   if (process.env.NODE_ENV === "production") {
+//     throw new Error(
+//       "The SESSION_SECRET environment variable must be set in production"
+//     );
+//   } else {
+//     sessionSecret = "--x DEV COOKIE SECRET; CHANGE ME x--";
+//   }
+// }
 
 let sessionMaxAge = 60 * 60 * 24 * 30; // 30 days
 
 const session = statelessSessions({
   maxAge: sessionMaxAge,
-  secret: sessionSecret,
+  secret: "asaaaaaaaaaaaaaaaaaaaaaadsadsadaaaaaafffffffffffffffffff",
   secure: false, // default: process.env.NODE_ENV === 'production'
 });
 
