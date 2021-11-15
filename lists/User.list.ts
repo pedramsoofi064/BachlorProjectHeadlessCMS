@@ -5,6 +5,7 @@ import {
   password,
   timestamp,
   select,
+  checkbox
 } from "@keystone-next/keystone/fields";
 
 export default list({
@@ -14,6 +15,9 @@ export default list({
       validation: { isRequired: true },
       isIndexed: "unique",
       isFilterable: true,
+    }),
+    isAdmin: checkbox({
+      defaultValue: false,
     }),
     // The password field takes care of hiding details and hashing values
     password: password({ validation: { isRequired: true } }),
