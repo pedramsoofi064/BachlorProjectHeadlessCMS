@@ -2,6 +2,7 @@
 # Modify your Keystone config when you want to change this.
 
 input CreateInitialUserInput {
+  name: String
   email: String
   password: String
 }
@@ -123,6 +124,7 @@ type User {
   id: ID!
   name: String
   email: String
+  isAdmin: Boolean
   password: PasswordState
 }
 
@@ -142,6 +144,7 @@ input UserWhereInput {
   id: IDFilter
   name: StringFilter
   email: StringFilter
+  isAdmin: BooleanFilter
 }
 
 input IDFilter {
@@ -183,10 +186,16 @@ input NestedStringFilter {
   not: NestedStringFilter
 }
 
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
+  isAdmin: OrderDirection
 }
 
 enum OrderDirection {
@@ -197,6 +206,7 @@ enum OrderDirection {
 input UserUpdateInput {
   name: String
   email: String
+  isAdmin: Boolean
   password: String
 }
 
@@ -208,6 +218,7 @@ input UserUpdateArgs {
 input UserCreateInput {
   name: String
   email: String
+  isAdmin: Boolean
   password: String
 }
 
@@ -527,11 +538,6 @@ input ImageManyRelationFilter {
   every: ImageWhereInput
   some: ImageWhereInput
   none: ImageWhereInput
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
 }
 
 input PageSectionOrderByInput {
