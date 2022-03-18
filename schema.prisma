@@ -38,11 +38,13 @@ model Tag {
 model Page {
   id             String        @id @default(cuid())
   pageURL        String        @default("")
+  test           String        @default("")
   title          String        @default("")
   sections       PageSection[] @relation("PageSection_page")
   additionalData String?
 
   @@index([pageURL])
+  @@index([test])
 }
 
 model PageSection {

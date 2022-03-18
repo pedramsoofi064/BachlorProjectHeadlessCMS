@@ -49,6 +49,13 @@ export default withAuth(
       isAccessAllowed: (context) => !!context.session?.data,
     },
     server: {
+      cors: {
+        origin: [
+          'http://localhost',
+          'http://192.168.43.241'
+        ],
+        credentials: true,
+      },
       port: 3000,
       maxFileSize: 200 * 1024 * 1024,
       healthCheck: true,

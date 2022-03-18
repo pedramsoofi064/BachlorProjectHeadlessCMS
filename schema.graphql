@@ -410,6 +410,7 @@ input PostRelateToManyForCreateInput {
 type Page {
   id: ID!
   pageURL: String
+  test: String
   title: String
   sections(
     where: PageSectionWhereInput! = {}
@@ -431,6 +432,7 @@ input PageWhereInput {
   NOT: [PageWhereInput!]
   id: IDFilter
   pageURL: StringFilter
+  test: StringFilter
   title: StringFilter
   sections: PageSectionManyRelationFilter
 }
@@ -444,11 +446,13 @@ input PageSectionManyRelationFilter {
 input PageOrderByInput {
   id: OrderDirection
   pageURL: OrderDirection
+  test: OrderDirection
   title: OrderDirection
 }
 
 input PageUpdateInput {
   pageURL: String
+  test: String
   title: String
   sections: PageSectionRelateToManyForUpdateInput
   additionalData: JSON
@@ -468,6 +472,7 @@ input PageUpdateArgs {
 
 input PageCreateInput {
   pageURL: String
+  test: String
   title: String
   sections: PageSectionRelateToManyForCreateInput
   additionalData: JSON

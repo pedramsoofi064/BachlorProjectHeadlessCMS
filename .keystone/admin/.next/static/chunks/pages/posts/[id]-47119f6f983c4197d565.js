@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[646],{547:function(n,t,u){"use strict";u.r(t);var _=u(3791);t.default=(0,_.p)({listKey:"Post"})},2572:function(n,t,u){(window.__NEXT_P=window.__NEXT_P||[]).push(["/posts/[id]",function(){return u(547)}])}},function(n){n.O(0,[791,774,888,179],(function(){return t=2572,n(n.s=t);var t}));var t=n.O();_N_E=t}]);

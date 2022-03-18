@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[195],{7314:function(n,r,t){"use strict";t.r(r);var u=t(6667);r.default=(0,u.d)({listKey:"Partner"})},8737:function(n,r,t){(window.__NEXT_P=window.__NEXT_P||[]).push(["/partners",function(){return t(7314)}])}},function(n){n.O(0,[667,774,888,179],(function(){return r=8737,n(n.s=r);var r}));var r=n.O();_N_E=r}]);

@@ -17,6 +17,7 @@ export default list({
   },
   fields: {
     pageURL: text({ validation: { isRequired: true }, isIndexed: true }),
+    test: text({ validation: { isRequired: false }, isIndexed: true }),
     title: text({ validation: { isRequired: true } }),
     sections: relationship({
       ref: "PageSection.page",
