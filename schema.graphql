@@ -410,7 +410,6 @@ input PostRelateToManyForCreateInput {
 type Page {
   id: ID!
   pageURL: String
-  test: String
   title: String
   sections(
     where: PageSectionWhereInput! = {}
@@ -432,7 +431,6 @@ input PageWhereInput {
   NOT: [PageWhereInput!]
   id: IDFilter
   pageURL: StringFilter
-  test: StringFilter
   title: StringFilter
   sections: PageSectionManyRelationFilter
 }
@@ -446,13 +444,11 @@ input PageSectionManyRelationFilter {
 input PageOrderByInput {
   id: OrderDirection
   pageURL: OrderDirection
-  test: OrderDirection
   title: OrderDirection
 }
 
 input PageUpdateInput {
   pageURL: String
-  test: String
   title: String
   sections: PageSectionRelateToManyForUpdateInput
   additionalData: JSON
@@ -472,7 +468,6 @@ input PageUpdateArgs {
 
 input PageCreateInput {
   pageURL: String
-  test: String
   title: String
   sections: PageSectionRelateToManyForCreateInput
   additionalData: JSON
@@ -487,38 +482,27 @@ type PageSection {
   id: ID!
   sectionId: String
   sectionTitle: String
-  backgroundImage: ImageFieldOutput
-  contentTitle: String
-  contentImages(
+  backgroundImages(
     where: ImageWhereInput! = {}
     orderBy: [ImageOrderByInput!]! = []
     take: Int
     skip: Int! = 0
   ): [Image!]
-  contentImagesCount(where: ImageWhereInput! = {}): Int
-  content: PageSection_content_Document
+  backgroundImagesCount(where: ImageWhereInput! = {}): Int
+  contentTitle_fa: String
+  contentTitle_en: String
+  content_fa: PageSection_content_fa_Document
+  content_en: PageSection_content_en_Document
   isActive: Boolean
   page: Page
+  additionalData: JSON
 }
 
-interface ImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: ImageExtension!
-  ref: String!
-  src: String!
+type PageSection_content_fa_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
 }
 
-enum ImageExtension {
-  jpg
-  png
-  webp
-  gif
-}
-
-type PageSection_content_Document {
+type PageSection_content_en_Document {
   document(hydrateRelationships: Boolean! = false): JSON!
 }
 
@@ -533,8 +517,9 @@ input PageSectionWhereInput {
   id: IDFilter
   sectionId: StringFilter
   sectionTitle: StringFilter
-  contentTitle: StringFilter
-  contentImages: ImageManyRelationFilter
+  backgroundImages: ImageManyRelationFilter
+  contentTitle_fa: StringFilter
+  contentTitle_en: StringFilter
   isActive: BooleanFilter
   page: PageWhereInput
 }
@@ -549,30 +534,23 @@ input PageSectionOrderByInput {
   id: OrderDirection
   sectionId: OrderDirection
   sectionTitle: OrderDirection
-  contentTitle: OrderDirection
+  contentTitle_fa: OrderDirection
+  contentTitle_en: OrderDirection
   isActive: OrderDirection
 }
 
 input PageSectionUpdateInput {
   sectionId: String
   sectionTitle: String
-  backgroundImage: ImageFieldInput
-  contentTitle: String
-  contentImages: ImageRelateToManyForUpdateInput
-  content: JSON
+  backgroundImages: ImageRelateToManyForUpdateInput
+  contentTitle_fa: String
+  contentTitle_en: String
+  content_fa: JSON
+  content_en: JSON
   isActive: Boolean
   page: PageRelateToOneForUpdateInput
+  additionalData: JSON
 }
-
-input ImageFieldInput {
-  upload: Upload
-  ref: String
-}
-
-"""
-The `Upload` scalar type represents a file upload.
-"""
-scalar Upload
 
 input ImageRelateToManyForUpdateInput {
   disconnect: [ImageWhereUniqueInput!]
@@ -595,12 +573,14 @@ input PageSectionUpdateArgs {
 input PageSectionCreateInput {
   sectionId: String
   sectionTitle: String
-  backgroundImage: ImageFieldInput
-  contentTitle: String
-  contentImages: ImageRelateToManyForCreateInput
-  content: JSON
+  backgroundImages: ImageRelateToManyForCreateInput
+  contentTitle_fa: String
+  contentTitle_en: String
+  content_fa: JSON
+  content_en: JSON
   isActive: Boolean
   page: PageRelateToOneForCreateInput
+  additionalData: JSON
 }
 
 input ImageRelateToManyForCreateInput {
@@ -618,6 +598,23 @@ type Image {
   title: String
   alt: String
   image: ImageFieldOutput
+}
+
+interface ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  ref: String!
+  src: String!
+}
+
+enum ImageExtension {
+  jpg
+  png
+  webp
+  gif
 }
 
 input ImageWhereUniqueInput {
@@ -655,6 +652,16 @@ input ImageUpdateInput {
   image: ImageFieldInput
 }
 
+input ImageFieldInput {
+  upload: Upload
+  ref: String
+}
+
+"""
+The `Upload` scalar type represents a file upload.
+"""
+scalar Upload
+
 input ImageUpdateArgs {
   where: ImageWhereUniqueInput!
   data: ImageUpdateInput!
@@ -668,16 +675,9 @@ input ImageCreateInput {
 
 type NavigationMenu {
   id: ID!
-  title: String
+  title_fa: String
+  title_en: String
   pageURL: String
-  parent: NavigationMenu
-  children(
-    where: NavigationMenuWhereInput! = {}
-    orderBy: [NavigationMenuOrderByInput!]! = []
-    take: Int
-    skip: Int! = 0
-  ): [NavigationMenu!]
-  childrenCount(where: NavigationMenuWhereInput! = {}): Int
   status: String
 }
 
@@ -690,45 +690,25 @@ input NavigationMenuWhereInput {
   OR: [NavigationMenuWhereInput!]
   NOT: [NavigationMenuWhereInput!]
   id: IDFilter
-  title: StringFilter
+  title_fa: StringFilter
+  title_en: StringFilter
   pageURL: StringFilter
-  parent: NavigationMenuWhereInput
-  children: NavigationMenuManyRelationFilter
   status: StringNullableFilter
-}
-
-input NavigationMenuManyRelationFilter {
-  every: NavigationMenuWhereInput
-  some: NavigationMenuWhereInput
-  none: NavigationMenuWhereInput
 }
 
 input NavigationMenuOrderByInput {
   id: OrderDirection
-  title: OrderDirection
+  title_fa: OrderDirection
+  title_en: OrderDirection
   pageURL: OrderDirection
   status: OrderDirection
 }
 
 input NavigationMenuUpdateInput {
-  title: String
+  title_fa: String
+  title_en: String
   pageURL: String
-  parent: NavigationMenuRelateToOneForUpdateInput
-  children: NavigationMenuRelateToManyForUpdateInput
   status: String
-}
-
-input NavigationMenuRelateToOneForUpdateInput {
-  create: NavigationMenuCreateInput
-  connect: NavigationMenuWhereUniqueInput
-  disconnect: Boolean
-}
-
-input NavigationMenuRelateToManyForUpdateInput {
-  disconnect: [NavigationMenuWhereUniqueInput!]
-  set: [NavigationMenuWhereUniqueInput!]
-  create: [NavigationMenuCreateInput!]
-  connect: [NavigationMenuWhereUniqueInput!]
 }
 
 input NavigationMenuUpdateArgs {
@@ -737,21 +717,10 @@ input NavigationMenuUpdateArgs {
 }
 
 input NavigationMenuCreateInput {
-  title: String
+  title_fa: String
+  title_en: String
   pageURL: String
-  parent: NavigationMenuRelateToOneForCreateInput
-  children: NavigationMenuRelateToManyForCreateInput
   status: String
-}
-
-input NavigationMenuRelateToOneForCreateInput {
-  create: NavigationMenuCreateInput
-  connect: NavigationMenuWhereUniqueInput
-}
-
-input NavigationMenuRelateToManyForCreateInput {
-  create: [NavigationMenuCreateInput!]
-  connect: [NavigationMenuWhereUniqueInput!]
 }
 
 type Partner {
@@ -791,7 +760,31 @@ input PartnerCreateInput {
 
 type Achievement {
   id: ID!
-  name: String
+  slug: String
+  title_fa: String
+  title_en: String
+  buttonTitle_fa: String
+  buttonTitle_en: String
+  summary_fa: String
+  summary_en: String
+  images(
+    where: ImageWhereInput! = {}
+    orderBy: [ImageOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Image!]
+  imagesCount(where: ImageWhereInput! = {}): Int
+  content_fa: Achievement_content_fa_Document
+  content_en: Achievement_content_en_Document
+  isActive: Boolean
+}
+
+type Achievement_content_fa_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+type Achievement_content_en_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
 }
 
 input AchievementWhereUniqueInput {
@@ -803,16 +796,41 @@ input AchievementWhereInput {
   OR: [AchievementWhereInput!]
   NOT: [AchievementWhereInput!]
   id: IDFilter
-  name: StringFilter
+  slug: StringFilter
+  title_fa: StringFilter
+  title_en: StringFilter
+  buttonTitle_fa: StringFilter
+  buttonTitle_en: StringFilter
+  summary_fa: StringFilter
+  summary_en: StringFilter
+  images: ImageManyRelationFilter
+  isActive: BooleanFilter
 }
 
 input AchievementOrderByInput {
   id: OrderDirection
-  name: OrderDirection
+  slug: OrderDirection
+  title_fa: OrderDirection
+  title_en: OrderDirection
+  buttonTitle_fa: OrderDirection
+  buttonTitle_en: OrderDirection
+  summary_fa: OrderDirection
+  summary_en: OrderDirection
+  isActive: OrderDirection
 }
 
 input AchievementUpdateInput {
-  name: String
+  slug: String
+  title_fa: String
+  title_en: String
+  buttonTitle_fa: String
+  buttonTitle_en: String
+  summary_fa: String
+  summary_en: String
+  images: ImageRelateToManyForUpdateInput
+  content_fa: JSON
+  content_en: JSON
+  isActive: Boolean
 }
 
 input AchievementUpdateArgs {
@@ -821,7 +839,17 @@ input AchievementUpdateArgs {
 }
 
 input AchievementCreateInput {
-  name: String
+  slug: String
+  title_fa: String
+  title_en: String
+  buttonTitle_fa: String
+  buttonTitle_en: String
+  summary_fa: String
+  summary_en: String
+  images: ImageRelateToManyForCreateInput
+  content_fa: JSON
+  content_en: JSON
+  isActive: Boolean
 }
 
 type NewsletterSubmission {

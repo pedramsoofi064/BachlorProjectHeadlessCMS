@@ -9,30 +9,11 @@ import {
 
 export default list({
   fields: {
-    title: text({ validation: { isRequired: true } }),
+    title_fa: text({ validation: { isRequired: true } }),
+    title_en: text({ validation: { isRequired: true } }),
     pageURL: text({ validation: { isRequired: true, }, }),
-    parent: relationship({
-      ref: "NavigationMenu.children",
-      ui: {
-        displayMode: "cards",
-        cardFields: ["title", "pageURL"],
-        linkToItem: true,
-        inlineConnect: true,
-      },
-    }),
-    children: relationship({
-      ref: "NavigationMenu.parent",
-      many: true,
-      ui: {
-        displayMode: "cards",
-        cardFields: ["title", "pageURL"],
-        linkToItem: true,
-        inlineConnect: true,
-      },
-    }),
     status: select({
       options: [
-        { label: "Invisible", value: "invisible" },
         { label: "Disabled", value: "disabled" },
         { label: "Enabled", value: "enabled" },
       ],
@@ -44,7 +25,7 @@ export default list({
   },
   ui: {
     listView: {
-      initialColumns: ["title", "pageURL", "parent", "status"],
+      initialColumns: ["title_fa" , 'title_en', "pageURL", "status"],
     },
     description: "منوی راهبری سامانه",
   },

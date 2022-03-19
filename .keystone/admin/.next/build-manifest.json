@@ -24,15 +24,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/images": [
+    "/achievements": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/images.js"
+      "static/chunks/pages/achievements.js"
     ],
-    "/navigation-menus": [
+    "/achievements/[id]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/navigation-menus.js"
+      "static/chunks/pages/achievements/[id].js"
     ]
   },
   "ampFirstPages": []

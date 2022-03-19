@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/images": "pages/images.js",
-  "/navigation-menus": "pages/navigation-menus.js"
+  "/achievements/[id]": "pages/achievements/[id].js",
+  "/achievements": "pages/achievements.js"
 }
