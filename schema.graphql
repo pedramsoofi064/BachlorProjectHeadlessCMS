@@ -102,6 +102,12 @@ type Mutation {
   deleteNewsletterSubmissions(
     where: [NewsletterSubmissionWhereUniqueInput!]!
   ): [NewsletterSubmission]
+  createFooter(data: FooterCreateInput!): Footer
+  createFooters(data: [FooterCreateInput!]!): [Footer]
+  updateFooter(where: FooterWhereUniqueInput!, data: FooterUpdateInput!): Footer
+  updateFooters(data: [FooterUpdateArgs!]!): [Footer]
+  deleteFooter(where: FooterWhereUniqueInput!): Footer
+  deleteFooters(where: [FooterWhereUniqueInput!]!): [Footer]
   endSession: Boolean!
 }
 
@@ -621,16 +627,6 @@ input ImageWhereUniqueInput {
   id: ID
 }
 
-type LocalImageFieldOutput implements ImageFieldOutput {
-  id: ID!
-  filesize: Int!
-  width: Int!
-  height: Int!
-  extension: ImageExtension!
-  ref: String!
-  src: String!
-}
-
 input ImageWhereInput {
   AND: [ImageWhereInput!]
   OR: [ImageWhereInput!]
@@ -679,6 +675,7 @@ type NavigationMenu {
   title_en: String
   pageURL: String
   status: String
+  type: String
 }
 
 input NavigationMenuWhereUniqueInput {
@@ -694,6 +691,7 @@ input NavigationMenuWhereInput {
   title_en: StringFilter
   pageURL: StringFilter
   status: StringNullableFilter
+  type: StringNullableFilter
 }
 
 input NavigationMenuOrderByInput {
@@ -702,6 +700,7 @@ input NavigationMenuOrderByInput {
   title_en: OrderDirection
   pageURL: OrderDirection
   status: OrderDirection
+  type: OrderDirection
 }
 
 input NavigationMenuUpdateInput {
@@ -709,6 +708,7 @@ input NavigationMenuUpdateInput {
   title_en: String
   pageURL: String
   status: String
+  type: String
 }
 
 input NavigationMenuUpdateArgs {
@@ -721,15 +721,29 @@ input NavigationMenuCreateInput {
   title_en: String
   pageURL: String
   status: String
+  type: String
 }
 
 type Partner {
   id: ID!
-  name: String
+  name_fa: String
+  name_en: String
+  status: String
+  logo: ImageFieldOutput
 }
 
 input PartnerWhereUniqueInput {
   id: ID
+}
+
+type LocalImageFieldOutput implements ImageFieldOutput {
+  id: ID!
+  filesize: Int!
+  width: Int!
+  height: Int!
+  extension: ImageExtension!
+  ref: String!
+  src: String!
 }
 
 input PartnerWhereInput {
@@ -737,16 +751,23 @@ input PartnerWhereInput {
   OR: [PartnerWhereInput!]
   NOT: [PartnerWhereInput!]
   id: IDFilter
-  name: StringFilter
+  name_fa: StringFilter
+  name_en: StringFilter
+  status: StringNullableFilter
 }
 
 input PartnerOrderByInput {
   id: OrderDirection
-  name: OrderDirection
+  name_fa: OrderDirection
+  name_en: OrderDirection
+  status: OrderDirection
 }
 
 input PartnerUpdateInput {
-  name: String
+  name_fa: String
+  name_en: String
+  status: String
+  logo: ImageFieldInput
 }
 
 input PartnerUpdateArgs {
@@ -755,7 +776,10 @@ input PartnerUpdateArgs {
 }
 
 input PartnerCreateInput {
-  name: String
+  name_fa: String
+  name_en: String
+  status: String
+  logo: ImageFieldInput
 }
 
 type Achievement {
@@ -887,6 +911,76 @@ input NewsletterSubmissionCreateInput {
   name: String
 }
 
+type Footer {
+  id: ID!
+  description_fa: String
+  description_en: String
+  email: String
+  phone: String
+  address_fa: String
+  address_en: String
+  copyRigth_fa: String
+  copyRigth_en: String
+}
+
+input FooterWhereUniqueInput {
+  id: ID
+}
+
+input FooterWhereInput {
+  AND: [FooterWhereInput!]
+  OR: [FooterWhereInput!]
+  NOT: [FooterWhereInput!]
+  id: IDFilter
+  description_fa: StringFilter
+  description_en: StringFilter
+  email: StringFilter
+  phone: StringFilter
+  address_fa: StringFilter
+  address_en: StringFilter
+  copyRigth_fa: StringFilter
+  copyRigth_en: StringFilter
+}
+
+input FooterOrderByInput {
+  id: OrderDirection
+  description_fa: OrderDirection
+  description_en: OrderDirection
+  email: OrderDirection
+  phone: OrderDirection
+  address_fa: OrderDirection
+  address_en: OrderDirection
+  copyRigth_fa: OrderDirection
+  copyRigth_en: OrderDirection
+}
+
+input FooterUpdateInput {
+  description_fa: String
+  description_en: String
+  email: String
+  phone: String
+  address_fa: String
+  address_en: String
+  copyRigth_fa: String
+  copyRigth_en: String
+}
+
+input FooterUpdateArgs {
+  where: FooterWhereUniqueInput!
+  data: FooterUpdateInput!
+}
+
+input FooterCreateInput {
+  description_fa: String
+  description_en: String
+  email: String
+  phone: String
+  address_fa: String
+  address_en: String
+  copyRigth_fa: String
+  copyRigth_en: String
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -979,6 +1073,14 @@ type Query {
     where: NewsletterSubmissionWhereUniqueInput!
   ): NewsletterSubmission
   newsletterSubmissionsCount(where: NewsletterSubmissionWhereInput! = {}): Int
+  footers(
+    where: FooterWhereInput! = {}
+    orderBy: [FooterOrderByInput!]! = []
+    take: Int
+    skip: Int! = 0
+  ): [Footer!]
+  footer(where: FooterWhereUniqueInput!): Footer
+  footersCount(where: FooterWhereInput! = {}): Int
   keystone: KeystoneMeta!
 }
 

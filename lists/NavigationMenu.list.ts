@@ -22,6 +22,16 @@ export default list({
       },
       defaultValue: "enabled",
     }),
+    type: select({
+      options: [
+        { label: "Link", value: "link" },
+        { label: "Button", value: "button" },
+      ],
+      ui: {
+        displayMode: "segmented-control",
+      },
+      defaultValue: "link",
+    }),
   },
   ui: {
     listView: {

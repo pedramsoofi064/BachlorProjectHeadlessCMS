@@ -8,6 +8,7 @@ import NavigationMenu from './NavigationMenu.list'
 import Partner from './Partner.list'
 import Achievement from './Achievement.list'
 import NewsletterSubmission from './NewsletterSubmission.list'
+import Footer from './Footer.list'
 
 export default {
     User,
@@ -19,5 +20,6 @@ export default {
     NavigationMenu,
     Partner,
     Achievement,
-    NewsletterSubmission
+    NewsletterSubmission,
+    Footer
 }

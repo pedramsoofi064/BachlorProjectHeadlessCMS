@@ -2,6 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/achievements/[id]": "pages/achievements/[id].js",
-  "/achievements": "pages/achievements.js"
+  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js",
+  "/footers": "pages/footers.js",
+  "/footers/[id]": "pages/footers/[id].js"
 }

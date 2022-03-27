@@ -83,11 +83,20 @@ model NavigationMenu {
   title_en String  @default("")
   pageURL  String  @default("")
   status   String? @default("enabled")
+  type     String? @default("link")
 }
 
 model Partner {
-  id   String @id @default(cuid())
-  name String @default("")
+  id             String  @id @default(cuid())
+  name_fa        String  @default("")
+  name_en        String  @default("")
+  status         String? @default("enabled")
+  logo_filesize  Int?
+  logo_extension String?
+  logo_width     Int?
+  logo_height    Int?
+  logo_mode      String?
+  logo_id        String?
 }
 
 model Achievement {
@@ -108,4 +117,16 @@ model Achievement {
 model NewsletterSubmission {
   id   String @id @default(cuid())
   name String @default("")
+}
+
+model Footer {
+  id             String @id @default(cuid())
+  description_fa String @default("")
+  description_en String @default("")
+  email          String @default("")
+  phone          String @default("")
+  address_fa     String @default("")
+  address_en     String @default("")
+  copyRigth_fa   String @default("")
+  copyRigth_en   String @default("")
 }

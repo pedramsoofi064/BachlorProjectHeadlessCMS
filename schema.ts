@@ -11,5 +11,6 @@ export const lists = {
   NavigationMenu: AppLists.NavigationMenu,
   Partner: AppLists.Partner,
   Achievement: AppLists.Achievement , 
-  NewsletterSubmission: AppLists.NewsletterSubmission
+  NewsletterSubmission: AppLists.NewsletterSubmission,
+  Footer: AppLists.Footer
 };

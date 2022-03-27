@@ -5,15 +5,28 @@ import {
   password,
   timestamp,
   select,
+  image
 } from "@keystone-next/keystone/fields";
 
 export default list({
   fields: {
-    name: text({ validation: { isRequired: true } }),
+    name_fa: text({ validation: { isRequired: true } }),
+    name_en: text({ validation: { isRequired: true } }),
+    status: select({
+      options: [
+        { label: "Disabled", value: "disabled" },
+        { label: "Enabled", value: "enabled" },
+      ],
+      ui: {
+        displayMode: "segmented-control",
+      },
+      defaultValue: "enabled",
+    }),
+    logo: image(),
   },
   ui: {
     listView: {
-      initialColumns: ["name"],
+      initialColumns: ["name_fa" ,"logo" ],
     },
   },
 });
