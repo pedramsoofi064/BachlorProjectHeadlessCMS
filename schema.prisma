@@ -21,18 +21,33 @@ model User {
 }
 
 model Post {
-  id          String    @id @default(cuid())
-  title       String    @default("")
-  status      String?   @default("draft")
-  content     String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
-  publishDate DateTime?
-  tags        Tag[]     @relation("Post_tags_Tag_posts")
+  id              String    @id @default(cuid())
+  authorName_fa   String    @default("")
+  authorName_en   String    @default("")
+  title_fa        String    @default("")
+  title_en        String    @default("")
+  buttonTitle_fa  String    @default("test")
+  buttonTitle_en  String    @default("test")
+  summary_fa      String    @default("")
+  summary_en      String    @default("")
+  isActive        Boolean   @default(false)
+  image_filesize  Int?
+  image_extension String?
+  image_width     Int?
+  image_height    Int?
+  image_mode      String?
+  image_id        String?
+  publishDate     DateTime?
+  tags            Tag[]     @relation("Post_tags_Tag_posts")
+  content_fa      String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  content_en      String    @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
 }
 
 model Tag {
-  id    String @id @default(cuid())
-  name  String @default("")
-  posts Post[] @relation("Post_tags_Tag_posts")
+  id      String @id @default(cuid())
+  name_fa String @default("")
+  name_en String @default("")
+  posts   Post[] @relation("Post_tags_Tag_posts")
 }
 
 model Page {
@@ -120,13 +135,14 @@ model NewsletterSubmission {
 }
 
 model Footer {
-  id             String @id @default(cuid())
-  description_fa String @default("")
-  description_en String @default("")
-  email          String @default("")
-  phone          String @default("")
-  address_fa     String @default("")
-  address_en     String @default("")
-  copyRigth_fa   String @default("")
-  copyRigth_en   String @default("")
+  id             String  @id @default(cuid())
+  description_fa String  @default("")
+  description_en String  @default("")
+  email          String  @default("")
+  phone          String  @default("")
+  address_fa     String  @default("")
+  address_en     String  @default("")
+  copyRigth_fa   String  @default("")
+  copyRigth_en   String  @default("")
+  status         String? @default("enabled")
 }

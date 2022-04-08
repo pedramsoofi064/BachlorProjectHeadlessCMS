@@ -6,7 +6,8 @@ export default list({
     isHidden: true,
   },
   fields: {
-    name: text(),
+    name_fa: text(),
+    name_en: text(),
     posts: relationship({ ref: "Post.tags", many: true }),
   },
 });

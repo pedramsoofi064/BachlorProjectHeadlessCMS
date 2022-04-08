@@ -1,5 +1,5 @@
 import { list } from "@keystone-next/keystone";
-import { text, relationship } from "@keystone-next/keystone/fields";
+import { text, relationship ,select } from "@keystone-next/keystone/fields";
 
 export default list({
   ui: {
@@ -16,6 +16,15 @@ export default list({
     address_en: text(),
     copyRigth_fa: text(),
     copyRigth_en: text(),
-    
+    status: select({
+      options: [
+        { label: "Disabled", value: "disabled" },
+        { label: "Enabled", value: "enabled" },
+      ],
+      ui: {
+        displayMode: "segmented-control",
+      },
+      defaultValue: "enabled",
+    }),
   },
 });
